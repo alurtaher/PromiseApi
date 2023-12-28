@@ -2,28 +2,28 @@
 let posts = [];
 let lastActivityTime = null;
 
-// Function to create a new post
-function createPost(post) {
-  return new Promise((resolve, reject) => {
+// Function to create a new post (
+async function createPost(post) {
+  return new Promise((resolve) => {
     setTimeout(() => {
       posts.push(post);
       resolve(posts);
-    }, 1000); // Simulating 1 second delay
+    }, 1000);
   });
 }
 
-// Function to update the user's last activity time
-function updateLastUserActivityTime() {
-  return new Promise((resolve, reject) => {
+// Function to update the user's last activity time 
+async function updateLastUserActivityTime() {
+  return new Promise((resolve) => {
     setTimeout(() => {
       lastActivityTime = new Date();
       resolve(lastActivityTime);
-    }, 1000); // Simulating 1 second delay
+    }, 1000);
   });
 }
 
-// Function to delete the last post
-function deletePost() {
+// Function to delete the last post 
+async function deletePost() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (posts.length > 0) {
@@ -32,8 +32,35 @@ function deletePost() {
       } else {
         reject(new Error("No posts to delete."));
       }
-    }, 1000); // Simulating 1 second delay
+    }, 1000);
   });
+}
+
+// New promise called getColdDrinks
+async function getColdDrinks() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Cold Drinks");
+    }, 1000);
+  });
+}
+
+// Example usage with async/await and Promise.all
+async function main() {
+  try {
+    await createPost("First Post");
+    await updateLastUserActivityTime();
+    logPostsAndLastActivity();
+
+
+    await getColdDrinks();
+    logPostsAndLastActivity();
+
+    await deletePost();
+    logPostsAndLastActivity();
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // Function to log posts and last activity time
@@ -42,10 +69,5 @@ function logPostsAndLastActivity() {
   console.log("Last Activity Time:", lastActivityTime);
 }
 
-// Example usage
-createPost("First Post")
-  .then(() => updateLastUserActivityTime())
-  .then(() => logPostsAndLastActivity())
-  .then(() => deletePost())
-  .then(() => logPostsAndLastActivity())
-  .catch((error) => console.error(error));
+
+main();
